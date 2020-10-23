@@ -10,7 +10,6 @@ void do_next_op(char, double, double *);
 int operator_is_binary();
 
 
-
 int main(void){
     run_calculator();
     return EXIT_SUCCESS;
