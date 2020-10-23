@@ -7,6 +7,7 @@
 void run_calculator();
 void scan_data();
 void do_next_op(char, double, double *);
+int operator_is_valid(char);
 int operator_is_binary(char);
 
 
@@ -26,7 +27,6 @@ void run_calculator(){
            operand = 0.0;
     do{
         scan_data(&operator, &operand);
-
         if(operator != SENTINAL){
             do_next_op(operator, operand, &accumulator);
             printf("Result so far is %lf.\n", accumulator);
@@ -39,15 +39,39 @@ void run_calculator(){
 /* 
 *   Prompts user for an operator and option operand,
 *   if the operator is binary, it takes the 2nd input
-*   USES function operator_is_binary  
+*   USES functions is_valid_operator, operator_is_binary
+*   Heavily commented because of its complexity
 */
 void scan_data(char *operator, double *operand){
-
-    printf("Enter operator, and an optional operand: ");
-    scanf(" %c", operator);
-    if(operator_is_binary(*operator))
-        scanf(" %lf", operand);
-    else *operand = 0.0;
+    do{
+        printf("Enter operator, and an optional operand: ");
+        scanf(" %c", operator);                             /*first we read the operator*/
+        if(operator_is_valid(*operator)){                   /*Check if operator is valid*/
+            if(operator_is_binary(*operator)){              /*If operator is binary*/
+                scanf(" %lf", operand);                     /*Then we need to read the 2nd input*/
+            } else *operand = 0.0;                          /*If operator is binary*/
+        } else fflush(stdin);                               /*If operator is not valid*/
+    }while(!operator_is_valid(*operator));                  /*Keep prompting the user till operator is valid*/
+}
+/*
+* This function is created in the attempt to validate the operator,
+* so inputting 123 would not print for every sign
+*/
+int operator_is_valid(char operator){
+    int boolResult;
+    if(operator == '+' ||
+       operator == '-' ||
+       operator == '*' ||
+       operator == '/' ||
+       operator == '^' ||
+       operator == '#' ||
+       operator == '%' ||
+       operator == '!' ||
+       operator == 'q'){
+        boolResult = 1;
+    }
+    else boolResult = 0;
+    return boolResult;
 }
 
 /* 
