@@ -7,7 +7,7 @@
 void run_calculator();
 void scan_data();
 void do_next_op(char, double, double *);
-int operator_is_binary();
+int operator_is_binary(char);
 
 
 int main(void){
@@ -22,8 +22,8 @@ int main(void){
 
 void run_calculator(){
     char operator;
-    double accumulator = 0.0,
-               operand = 0.0;
+    double accumulator = 0.0, 
+           operand = 0.0;
     do{
         scan_data(&operator, &operand);
 
@@ -42,15 +42,12 @@ void run_calculator(){
 *   USES function operator_is_binary  
 */
 void scan_data(char *operator, double *operand){
-    char operatorPlaceholder;
-    double operandPlaceholder;
-        printf("Enter operator, and an optional operand: ");
-    scanf(" %c", &operatorPlaceholder);
-    if(operator_is_binary(&operatorPlaceholder))
-        scanf(" %lf", &operandPlaceholder);
+
+    printf("Enter operator, and an optional operand: ");
+    scanf(" %c", operator);
+    if(operator_is_binary(*operator))
+        scanf(" %lf", operand);
     else *operand = 0.0;
-    *operator = operatorPlaceholder;
-    *operand = operandPlaceholder;
 }
 
 /* 
@@ -58,13 +55,13 @@ void scan_data(char *operator, double *operand){
 *   returns 1 if operator is binary
 *   returns 0 if operator is not binary
 */
-int operator_is_binary(char *operator){
+int operator_is_binary(char operator){
     int boolResult;
-    if(*operator == '+' ||
-       *operator == '-' ||
-       *operator == '*' ||
-       *operator == '/' ||
-       *operator == '^'){
+    if(operator == '+' ||
+       operator == '-' ||
+       operator == '*' ||
+       operator == '/' ||
+       operator == '^'){
         boolResult = 1;
     }
     else boolResult = 0;
