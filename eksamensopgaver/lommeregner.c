@@ -32,7 +32,7 @@ void run_calculator(){
             printf("Result so far is %lf.\n", accumulator);
         }
         else printf("Final Result: %lf.\n", accumulator);
-    } while (operator != SENTINAL);
+    } while (operator != SENTINAL); /*Program stops running if SENTINAL is inputted*/
     
 }
 
@@ -70,7 +70,7 @@ int operator_is_valid(char operator){
        operator == '#' ||
        operator == '%' ||
        operator == '!' ||
-       operator == 'q'){
+       operator == SENTINAL){
         boolResult = 1;
     }
     else boolResult = 0;
