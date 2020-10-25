@@ -17,7 +17,7 @@ int main(void){
 }
 
 /* 
-*   Runs the calculator while q is not entered
+*   Procedure that runs the calculator while q is not entered
 *   USES functions scan_data, do_next_op
 */
 
@@ -50,12 +50,15 @@ void scan_data(char *operator, double *operand){
             if(operator_is_binary(*operator)){              /*If operator is binary*/
                 scanf(" %lf", operand);                     /*Then we need to read the 2nd input*/
             } else *operand = 0.0;                          /*If operator is binary*/
-        } else fflush(stdin);                               /*If operator is not valid*/
+        } else fflush(stdin);                               /*If operator is not valid, clear the user input*/
     }while(!operator_is_valid(*operator));                  /*Keep prompting the user till operator is valid*/
 }
 /*
-* This function is created in the attempt to validate the operator,
-* so inputting 123 would not print for every sign
+*   Checks if operator is valid.
+*   Used for input validation.
+*   Takes operator input as char
+*   Returns 1 if operator is valid
+*   Returns 0 if operator is not valid
 */
 int operator_is_valid(char operator){
     int boolResult;
@@ -76,6 +79,7 @@ int operator_is_valid(char operator){
 
 /* 
 *   Checks if operator is binary
+*   Takes operator input as char
 *   returns 1 if operator is binary
 *   returns 0 if operator is not binary
 */
@@ -94,6 +98,7 @@ int operator_is_binary(char operator){
 
 /* 
 *   Does a calculation depending on the operator
+*   Also has resopnsibility for some of the input validation
 *   Takes the operator as char, the operand as double and the accumulator as a double pointer 
 *   outputs the accumulator through the pointer
 */
