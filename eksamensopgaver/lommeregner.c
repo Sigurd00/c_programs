@@ -1,3 +1,9 @@
+/*
+*   Jacob Johannes Sigurd Skadborg
+*   jskadb20@student.aau.dk
+*   Gruppe A408a
+*   Software
+*/
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
@@ -17,7 +23,7 @@ int main(void){
 }
 
 /* 
-*   Procedure that runs the calculator while q is not entered
+*   Procedure that runs the calculator while SENTINAL is not entered
 *   USES functions scan_data, do_next_op
 */
 
@@ -40,25 +46,24 @@ void run_calculator(){
 *   Prompts user for an operator and option operand,
 *   if the operator is binary, it takes the 2nd input
 *   USES functions is_valid_operator, operator_is_binary
-*   Heavily commented because of its complexity
 */
 void scan_data(char *operator, double *operand){
     do{
         printf("Enter operator, and an optional operand: ");
-        scanf(" %c", operator);                             /*first we read the operator*/
-        if(operator_is_valid(*operator)){                   /*Check if operator is valid*/
-            if(operator_is_binary(*operator)){              /*If operator is binary*/
-                scanf(" %lf", operand);                     /*Then we need to read the 2nd input*/
-            } else *operand = 0.0;                          /*If operator is binary*/
-        } else fflush(stdin);                               /*If operator is not valid, clear the user input*/
-    }while(!operator_is_valid(*operator));                  /*Keep prompting the user till operator is valid*/
+        scanf(" %c", operator);
+        if(operator_is_valid(*operator)){
+            if(operator_is_binary(*operator)){
+                scanf(" %lf", operand);
+            } else *operand = 0.0;
+        } else fflush(stdin);/*This ensures that every char after operator is deleted if operator is not valid*/
+    }while(!operator_is_valid(*operator));
 }
+
 /*
 *   Checks if operator is valid.
 *   Used for input validation.
-*   Takes operator input as char
-*   Returns 1 if operator is valid
-*   Returns 0 if operator is not valid
+*   Takes operator as char input
+*   Returns 1 if operator is valid, 0 if not
 */
 int operator_is_valid(char operator){
     int boolResult;
@@ -70,7 +75,7 @@ int operator_is_valid(char operator){
        operator == '#' ||
        operator == '%' ||
        operator == '!' ||
-       operator == SENTINAL){
+       operator == SENTINAL){ /*If operator is any of these, result = true*/
         boolResult = 1;
     }
     else boolResult = 0;
@@ -80,8 +85,7 @@ int operator_is_valid(char operator){
 /* 
 *   Checks if operator is binary
 *   Takes operator input as char
-*   returns 1 if operator is binary
-*   returns 0 if operator is not binary
+*   returns 1 if operator is binary, 0 if not
 */
 int operator_is_binary(char operator){
     int boolResult;
@@ -112,7 +116,7 @@ void do_next_op(char operator, double operand, double *accumulator){
         case '^': *accumulator = pow(*accumulator, operand);               break;
         case '#': if(*accumulator >= 0) *accumulator = sqrt(*accumulator); break;
         case '%': *accumulator = *accumulator * -1;                        break;
-        case '!': *accumulator = 1 / *accumulator;                         break;
+        case '!': if(*accumulator != 0) *accumulator = 1 / *accumulator;   break;
         default: break;
     }
 }
