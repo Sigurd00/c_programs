@@ -5,41 +5,50 @@
 double trapz();
 double sum();
 double h();
-
+double g();
+double length();
 
 int main(void){ 
-    double (*fn) (int);
+    double (*fn) (double);
     char f;
-    int a, b, n;
+    double a, b, n;
     printf("Give me the limits a,b\n");
-    scanf(" %d %d", &a, &b);
+    scanf(" %lf %lf", &a, &b);
     printf("Now give me a number for the fineness and a char for the function\n");
-    scanf(" %d %c", &n, &f);
-    if( f == 'h')
-        fn = &h;
-
-    printf("The area is calculated to be = %lf",trapz(a, b, n, fn) ); 
-    
+    scanf(" %lf %c", &n, &f);
+    switch(f){ /* Ændre på hvilken funktion vi beregner areal på */
+        case 'h': fn = &h; break;
+        case 'g': fn = &g; break;
+        default : fn = &h; break;
+    }
+    printf("The area is calculated to be = %lf\n",trapz(a, b, n, fn) ); 
     return EXIT_SUCCESS;
 }
 
-double trapz(int a, int b, int n, double (*fn) (int)){
-    double h = (b - a) / n;
-
-    double T =  h/2 * (fn(a) + fn(b) + 2*(sum(n, fn)));
-
-    return T;
+double trapz(double a, double b, double n, double (*fn) (double)){
+    /*T = h/(2)(f(a)+f(b)+2(sum(f, i = a + h .. n - b))*/
+    return length(a, b, n)/2 * (fn(a) + fn(b) + 2*(sum(length(a, b, n), a, b, fn)));
 }
 
-
-double sum(int n, double (*fn) (int)){
-    double sum = 0.0;
-    int i;
-    for(i = 1; i < n; i++)
-        sum += fn(n);
+/* beregner sumnotationen fra formlen 
+*  sum(f, i = a + h .. n - b)) */
+double sum(double h, double a, double b, double (*fn) (double)){
+    double sum = 0.0, i;
+    for(i = a + h; i < b - h; i+= h)
+        sum += fn(i);
     return sum;
 }
 
-double h(int x){
-    return sqrt(4-(x*x)); 
+/* Regner længden af trapez intervallet */
+double length(double a, double b, double n){
+    return (b - a) / n;
+}
+
+/* Cirkel: sqrt(4-x^2) */
+double h(double x){
+    return sqrt(4-(x*x));
+}
+/* x^2 * sin(x) */
+double g(double x){
+    return x * x * sin(x);
 }
