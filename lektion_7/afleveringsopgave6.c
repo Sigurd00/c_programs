@@ -21,7 +21,7 @@ int main(void){
         case 'g': fn = &g; break;
         default : fn = &h; break;
     }
-    printf("The area is calculated to be = %lf\n",trapz(a, b, n, fn) ); 
+    printf("The area is calculated to be = %lf\n",trapz(a, b, n, fn)); 
     return EXIT_SUCCESS;
 }
 
