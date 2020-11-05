@@ -15,7 +15,7 @@ int main(void){
   
     mergeSort(L, 0, L_size - 1); 
   
-    printf("Er den sorterede liste \n"); 
+    printf("Er den sorterede liste \n");
     printList(L, L_size); 
     return 0; 
 }
