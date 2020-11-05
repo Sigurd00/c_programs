@@ -27,14 +27,10 @@ void merge(int L[], int start, int slut, int midt){
     int i, j = 0, k = 0;
     for(i = 0; i <= midt - start + 1; i++){
         L1[i] = L[start + i];
-        printf("L1[%d] = %d ", i, L1[i]);
     }
-    printf("\n");
     for(i = 0; i <= slut - midt; i++){
         L2[i] = L[midt + i + 1];
-        printf("L2[%d] = %d ", i, L2[i]);
     }
-    printf("\n");
 
     /* Herefter skal vi kopiere elementer fra L1 og L2 ind på pladserne i L mellem start og slut men i sorteret rækkefølge */
     i = 0;
