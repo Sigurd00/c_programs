@@ -1,0 +1,15 @@
+*Lav en bruger for at kunne lægge opskrifter op
+	* Alle skal kunne se opskrifterne
+	* Alle ens opskrifter står på ens profil
+	* Man kan give opskrifterne ratings og reviews og man kan også bare skrive kommentar på dem
+*Man skal kunne søge efter opskrifter
+*Man skal kunne sortere dem efter en række ting
+	*Pris
+	*Ratings
+	*Antal favorites
+	*Tid
+	*sværhedsgrad?
+	*Nyeste
+	*Trending
+* Man skal kunne favorite retter
+	* Der skal være en menu hvor man kan se alle sine favorites
