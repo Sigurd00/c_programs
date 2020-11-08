@@ -7,7 +7,9 @@ void process_product_code(char *, char *, char *, char *);
 
 int main(void){
     char productCode[] = "ATL1203S14";            /*Input*/
-    char warehouse[4], product[5], qualifiers[4]; /*Output*/
+    char warehouse[4]  = {};
+    char product[5]    = {};
+    char qualifiers[4] = {}; /*Output*/
 
     printf("Product code is : %s\n", productCode);
     process_product_code(productCode, warehouse, product, qualifiers);
@@ -29,6 +31,6 @@ void process_product_code(char *productCode, char *warehouse, char *product, cha
         i++;
     }
     strncpy(warehouse, productCode, firstDigitPosition);
-    strncpy(product, productCode + firstDigitPosition, alphaAfterDigitPosition - firstDigitPosition); /*TODO: This is not working correctly*/
+    strncpy(product, productCode + firstDigitPosition, alphaAfterDigitPosition - firstDigitPosition);
     strncpy(qualifiers, productCode + alphaAfterDigitPosition, strlen(productCode) - alphaAfterDigitPosition);
 }
