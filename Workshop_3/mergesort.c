@@ -15,7 +15,7 @@ int main(void){
   
     mergeSort(L, 0, L_size - 1); 
   
-    printf("Er den sorterede liste \n");
+    printf("Er den sorterede liste \n"); 
     printList(L, L_size); 
     return 0; 
 }
@@ -25,10 +25,10 @@ void merge(int L[], int start, int slut, int midt){
     int *L1 = (int *) malloc((midt - start + 1) * sizeof(int));
     int *L2 = (int *) malloc((slut - midt) * sizeof(int));
     int i, j = 0, k = 0;
-    for(i = 0; i <= midt - start + 1; i++){
+    for(i = 0; i < midt - start + 1; i++){
         L1[i] = L[start + i];
     }
-    for(i = 0; i <= slut - midt; i++){
+    for(i = 0; i < slut - midt; i++){
         L2[i] = L[midt + i + 1];
     }
 
