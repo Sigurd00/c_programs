@@ -12,3 +12,6 @@
 ###### Lektion 11: Datastrukturer - Structs
 ###### Lektion 12: Input/output og Filer
 ###### Lektion 13: Rekursion
+###### Eksamenopgaver
+    Lommeregner
+    Yatzy
