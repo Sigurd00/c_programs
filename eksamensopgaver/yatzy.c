@@ -28,7 +28,7 @@ int get_value_of_pairs(int *, const int, const int, const int);
 int get_straight(int *, const int, const int);
 int get_full_house(int *, const int, const int);
 int get_chance(int *, const int);
-int cmpfunc (const void *, const void *);
+int int_compare(const void *, const void *);
 
 /*TODO: 
 *   GENERAL: Sørg for at alle steder hvor der kan være const input parameter, skal dette forekomme.
@@ -230,13 +230,13 @@ int get_same_kind(int * dice_rolls, const int min_same_kind, const int runde, co
 int get_value_of_pairs(int *dice_rolls, const int pairs_requested, const int count_dice, const int disallowed){
     int *pairs = (int *) malloc(pairs_requested * sizeof(int));
     int i = count_dice, pairs_found = 0, pair_found_value = 0, points = 0;
-    qsort(dice_rolls, count_dice, sizeof(int), cmpfunc); /*sortering af listen gør det en del nememere at finde par*/
+    qsort(dice_rolls, count_dice, sizeof(int), int_compare); /*sortering af listen gør det en del nememere at finde par*/
     /*Kør ind til vi har fundet antallet af par der bliver spurgt om, eller til vi har gennemgået alle terninger*/
     while(pairs_found < pairs_requested && i > 0){
         if(dice_rolls[i] == dice_rolls[i - 1] && dice_rolls[i] != pair_found_value && dice_rolls[i] != disallowed){ /*Er den her terning ens med den næste?*/
             pairs[pairs_found] = dice_rolls[i];
             pairs_found++;
-            pair_found_value = dice_rolls[i];   /*Hvis vi har fundet et par af 6'ere, skal vi ikke søge efter flere par af 6'ere*/
+            pair_found_value = dice_rolls[i]; /*Hvis vi har fundet et par af 6'ere, skal vi ikke søge efter flere par af 6'ere*/
             i--; /*Vi kan hoppe over den terning der danner par*/
         }
         i--;
@@ -256,7 +256,7 @@ int get_value_of_pairs(int *dice_rolls, const int pairs_requested, const int cou
 /*Ser om vores terninger kan lave en straight*/
 int get_straight(int * dice_rolls, const int runde, const int n){
     int i, highest_in_straight = 0, points = 0;
-    qsort(dice_rolls, n, sizeof(int), cmpfunc);
+    qsort(dice_rolls, n, sizeof(int), int_compare);
     for(i = 0; i < n; i++){
         if(dice_rolls[i] == highest_in_straight + 1){
             highest_in_straight++;
@@ -292,7 +292,7 @@ int get_full_house(int * dice_rolls, const int runde, const int n){
 /*Tager summen af de største 5 terninger*/
 int get_chance(int *dice_rolls, const int n){
     int i, points = 0;
-    qsort(dice_rolls, n, sizeof(int), cmpfunc);
+    qsort(dice_rolls, n, sizeof(int), int_compare);
     for(i = n - 1; i > n - 6; i--){
         points += dice_rolls[i];
     }
@@ -300,6 +300,12 @@ int get_chance(int *dice_rolls, const int n){
 }
 
 /*Hjælpe-funktion til qsort*/
-int cmpfunc (const void * a, const void * b) {
-   return ( *(int*)a - *(int*)b );
+int int_compare(const void *p, const void *q){
+    int x = *(const int *)p; /*dereferencer vores pointere og tilskriver dem en værdi til samenligning */
+    int y = *(const int *)q;
+
+    return (x > y) - (x < y);
+    /*antag x > y -->
+     (x > y) --> 1
+     (x < y --> 0*/
 }
