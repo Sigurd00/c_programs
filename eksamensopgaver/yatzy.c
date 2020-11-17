@@ -1,3 +1,9 @@
+/*
+*   Jacob Johannes Sigurd Skadborg
+*   jskadb20@student.aau.dk
+*   Gruppe A408a
+*   Software
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -28,12 +34,9 @@ int get_value_of_pairs(int *, const int, const int, const int);
 int get_straight(int *, const int, const int);
 int get_full_house(int *, const int, const int);
 int get_chance(int *, const int);
+int get_yatzy(int *, const int);
 int int_compare(const void *, const void *);
 
-/*TODO: 
-*   GENERAL: Sørg for at alle steder hvor der kan være const input parameter, skal dette forekomme.
-*   General: Sørg for at alle variabler har samme naming convention, ie. diceRolls, eller dice_rolls 
-*/
 int main(void){
     int n;
     srand(time(NULL));
@@ -67,8 +70,8 @@ void play_yatzy(const int n){
         round_points[runde] = play_round(dice_rolls, runde, n);
         round_points[0] += round_points[runde];
         if(runde == sixes && round_points[0] >= 63){ /*Har vi fået nok points til at få bonus points?*/
-            round_points[0] += BONUS;
             show_round_results(unsorted_dice_rolls, runde, round_points[runde], round_points[0], n, BONUS);
+            round_points[0] += BONUS;
             got_bonus_bool = 1;
         } else {
             show_round_results(unsorted_dice_rolls, runde, round_points[runde], round_points[0], n, NO_BONUS);
@@ -115,7 +118,7 @@ int play_round(int *dice_rolls, const int runde, const int n){
             case lStraight: points = get_straight(dice_rolls, runde, n);      break;
             case house:     points = get_full_house(dice_rolls, runde, n);    break;
             case chance:    points = get_chance(dice_rolls, n);               break;
-            case yatzy:     points = get_same_kind(dice_rolls, 5, runde, n);  break;
+            case yatzy:     points = get_yatzy(dice_rolls, n);                break;
             default:
                 printf("\n\n Something went wrong, exiting \n\n"); 
                 exit(EXIT_FAILURE); break;
@@ -135,17 +138,24 @@ void show_round_results(int *dice_rolls, const int runde, const int points, cons
     }
     printf("Points = %2d Points so far = %d\n", points, total_points);
     if(runde == sixes && bonus){
-        printf("                ############# BONUS %d POINTS #############\n", bonus);
+        printf("                ");
+        for(i = 0; i <n - 1; i++){
+            printf("-");
+        }
+        printf("BONUS %d POINTS", bonus);
+        for(i = 0; i <n - 2; i++){
+            printf("-");
+        }
+        printf(" Points = %2d Points so far = %d\n", bonus, total_points + bonus);
     }
     free(round_title); /*Free fra heap*/
 }
-
 
 /*Funktion der efter spillet viser en oversigt over hvor mange points man fik i hver runde*/
 void show_game_result(int *round_points, const int got_bonus_bool){
     char *round_title; /*Så vi ikke taber vores pointer fra heap*/
     printf("\nTotal points : %d\n", round_points[0]);
-    for(runde = FIRST_ROUND; runde < LAST_ROUND; runde++){
+    for(runde = FIRST_ROUND; runde <= LAST_ROUND; runde++){
         printf("%s : %d\n", round_title = print_round_title(runde), round_points[runde]);
         if(runde == sixes && got_bonus_bool){
             printf("\n####################\n");
@@ -297,6 +307,12 @@ int get_chance(int *dice_rolls, const int n){
         points += dice_rolls[i];
     }
     return points;
+}
+
+int get_yatzy(int *dice_rolls, const int n){
+    if(get_same_kind(dice_rolls, 5, yatzy, n))
+        return 50;
+    else return 0;
 }
 
 /*Hjælpe-funktion til qsort*/
