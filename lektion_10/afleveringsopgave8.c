@@ -6,7 +6,7 @@
 void process_product_code(char *, char *, char *, char *);
 
 int main(void){
-    char productCode[] = "ATL1203S14"; /*Input*/
+    char productCode[]   = "ATL1203S14"; /*Input*/
     char warehouse[100]  = ""; /*Output*/
     char product[100]    = ""; /*Output*/
     char qualifiers[100] = ""; /*Output*/
