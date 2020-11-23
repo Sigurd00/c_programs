@@ -191,7 +191,7 @@ int h(char *teamname){
     else if(strcmp(teamname, "SIF") == 0) return SIF;
     else if(strcmp(teamname, "HOB") == 0) return HOB;
     else if(strcmp(teamname, "AGF") == 0) return AGF;
-    else return -1;
+    else return -1;/* Should never happen, will result in seg.fault */
 }
 
 /*Helperfunction - Returns the number of lines in file*/
