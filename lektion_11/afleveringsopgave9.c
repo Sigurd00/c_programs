@@ -9,15 +9,14 @@ enum numeral{deuce = 2, treys, four, five, six, seven, eight,
                   nine, ten, jack, queen, king, ace};
 enum suit{clubs = 1, diamonds, hearts, spades};
 /*Vi antager her at ace er højeste værdi*/
-
 enum numeral numeral;
 enum suit suit;
-struct card {
+
+typedef struct card {
     int suit;
     int numeral_value;
     int is_joker; /*Boolean*/
-};
-typedef struct card card;
+} card;
 
 void make_deck(card *deck);
 card make_card(int suit, int numeral_value, int is_joker);
@@ -44,12 +43,12 @@ int main(void){
 /*Makes a whole deck of cards*/
 void make_deck(card *deck){
     int i = 0;
-    for (suit = spades; suit >= clubs; suit--){
-        for (numeral = deuce; numeral <= ace; numeral++, i++){
+    for (suit = spades; suit >= clubs; suit--){ /*Goes through every suit*/
+        for (numeral = deuce; numeral <= ace; numeral++, i++){ /* And every numeral */
             deck[i] = make_card(suit, numeral, 0);
         }
     }
-    for(i = 52; i < 52+JOKER_COUNT; i++){
+    for(i = 52; i < 52+JOKER_COUNT; i++){ 
         deck[i] = make_card(0, 0, 1);
     }
 }
