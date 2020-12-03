@@ -6,18 +6,22 @@
 
 enum team_names{FCM, EFB, SDR, RFC, ACH, FCN, LBK, AaB, OB, FCK, BIF, SIF, HOB, AGF};
 
-typedef struct game{
+typedef struct date{
     char weekday[4];
-    int date_day;
-    int data_month;
-    double clock;
+    int day;
+    int month;
+    double hour;
+} date;
+
+typedef struct game{
+    date date;
     char team1[4];
     char team2[4];
     int goals_team1;
     int goals_team2;
     int spectators;
-
 } game;
+
 typedef struct team{
     char *teamname;
     int score;
@@ -72,8 +76,8 @@ game get_game(char* line){
 
     /* Scanset for line to correctly read the data */
     sscanf(line, " %s %d / %d %lf %s - %s %d - %d %d ",
-        game.weekday, &game.date_day, &game.data_month, 
-        &game.clock, game.team1, game.team2, &game.goals_team1,
+        game.date.weekday, &game.date.day, &game.date.month, 
+        &game.date.hour, game.team1, game.team2, &game.goals_team1,
         &game.goals_team2, &game.spectators);
     return game;
 }
@@ -137,7 +141,7 @@ team *calculate_team_scores(game *game, team *team, int count_games){
             team[team2_i].score++;
         }
     }
-    return team;    
+    return team;
 }
 
 /* Sorts teams by score and goals using qsort, uses cmp functions */
@@ -185,7 +189,7 @@ int h(char *teamname){
     else if(strcmp(teamname, "FCN") == 0) return FCN;
     else if(strcmp(teamname, "LBK") == 0) return LBK;
     else if(strcmp(teamname, "AaB") == 0) return AaB;
-    else if(strcmp(teamname, "OB") == 0)  return OB;
+    else if(strcmp(teamname, "OB")  == 0) return OB;
     else if(strcmp(teamname, "FCK") == 0) return FCK;
     else if(strcmp(teamname, "BIF") == 0) return BIF;
     else if(strcmp(teamname, "SIF") == 0) return SIF;
