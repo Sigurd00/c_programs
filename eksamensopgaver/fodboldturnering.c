@@ -1,3 +1,9 @@
+/*
+*   Jacob Johannes Sigurd Skadborg
+*   jskadb20@student.aau.dk
+*   Gruppe A408a
+*   Software
+*/
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
